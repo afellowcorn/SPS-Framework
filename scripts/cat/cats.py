@@ -2372,6 +2372,7 @@ class Cat:
             return "\n".join(
                 [
                     self.genderalign_string,
+                    self.species,
                     i18n.t(
                         (
                             f"general.{self.age}"
@@ -2425,6 +2426,7 @@ class Cat:
                 "ID": self.ID,
                 "name_prefix": self.name.prefix,
                 "name_suffix": self.name.suffix,
+                "species": self.species,
                 "status": self.status.get_status_dict(),
                 "moons": self.moons,
                 "dead_for": self.dead_for,
@@ -2447,6 +2449,7 @@ class Cat:
                     else {i18n.config.get("locale"): self.pronouns}
                 ),
                 "birth_cooldown": self.birth_cooldown,
+                "species": self.species,
                 "status": self.status.get_status_dict(),
                 "dark_forest_affinity": self.dark_forest_affinity,
                 "starclan_affinity": self.starclan_affinity,
