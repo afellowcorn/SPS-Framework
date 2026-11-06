@@ -286,6 +286,9 @@ class NewCatFactory(BaseCatFactory, ABC):
                 age = cls._get_random_age_from_rank(
                     status_dict["group_history"][-1]["rank"]
                 )
+            elif "age" in status_dict:
+                age = status_dict["age"]
+                status = cls._get_random_status_from_age(status_dict["age"])
             else:
                 age = cls._get_random_age()
             status = Status(**status_dict)

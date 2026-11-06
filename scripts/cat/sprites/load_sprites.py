@@ -197,7 +197,7 @@ class Sprites:
                         i += 1
                         continue
 
-                    full_name = f"{name}{i}"
+                    full_name = f"{name}_{i}"
 
                 try:
                     new_sprite = pygame.Surface.subsurface(
@@ -424,17 +424,17 @@ class Sprites:
                                     length = len(c)
                                     break
                             addition = self.sprites[
-                                f"{sheet_name}{patch[match:length]}{folder}_{patch[length:]}{i}"
+                                f"{sheet_name}{patch[match:length]}{folder}_{patch[length:]}_{i}"
                             ]
                         else:
-                            addition = self.sprites[f"{sheet_name}{folder}_{patch}{i}"]
+                            addition = self.sprites[f"{sheet_name}{folder}_{patch}_{i}"]
                         new_patch.blit(
                             addition,
                             (0, 0),
                         )
 
                     self.sprites[
-                        f"{sheet_name}{white_category}{folder}_{name}{i}"
+                        f"{sheet_name}{white_category}{folder}_{name}_{i}"
                     ] = new_patch
                     i += 1
 

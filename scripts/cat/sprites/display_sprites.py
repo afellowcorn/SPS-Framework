@@ -158,7 +158,7 @@ def _draw_sprite(
         else:
             spritesheet = getattr(sprites, f"WHITE_LITTLE_DATA_{f}")["spritesheet"]
 
-        sprite_name = f"{spritesheet}{f}_{patch}{cat_sprite}"
+        sprite_name = f"{spritesheet}{f}_{patch}_{cat_sprite}"
         white_patches = sprites.sprites[sprite_name].copy()
         white_patches_tints = getattr(sprites, f"white_patches_tints_{f}")
 
@@ -184,7 +184,7 @@ def _draw_sprite(
 
     if cat.pelt.points:
         sprite_name = (
-            f"{getattr(sprites, f"WHITE_POINTS_DATA_{f}")['spritesheet']}{f}_{cat.pelt.points}{cat_sprite}"
+            f"{getattr(sprites, f"WHITE_POINTS_DATA_{f}")['spritesheet']}{f}_{cat.pelt.points}_{cat_sprite}"
         )
 
         points = sprites.sprites[sprite_name].copy()
@@ -205,7 +205,7 @@ def _draw_sprite(
         new_sprite.blit(points, (0, 0))
 
     if cat.pelt.vitiligo:
-        sprite_name = f"{getattr(sprites, f"WHITE_VITILIGO_DATA_{f}")['spritesheet']}{f}_{cat.pelt.vitiligo}{cat_sprite}"
+        sprite_name = f"{getattr(sprites, f"WHITE_VITILIGO_DATA_{f}")['spritesheet']}{f}_{cat.pelt.vitiligo}_{cat_sprite}"
 
         new_sprite.blit(
             sprites.sprites[sprite_name],
@@ -214,17 +214,17 @@ def _draw_sprite(
 
     # draw eyes & scars
     sprite_name = (
-        f"{getattr(sprites, f"EYE_DATA_{f}")['spritesheet'][0]}{f}_{cat.pelt.eye_colour}{cat_sprite}"
+        f"{getattr(sprites, f"EYE_DATA_{f}")['spritesheet'][0]}{f}_{cat.pelt.eye_colour}_{cat_sprite}"
     )
     eyes = sprites.sprites[sprite_name].copy()
     new_sprite.blit(eyes, (0, 0))
     if cat.pelt.eye_colour2 != None:
         heterochromia_name = (
-            f"{getattr(sprites, f"EYE_DATA_{f}")['spritesheet'][0]}{f}_{cat.pelt.eye_colour2}{cat_sprite}"
+            f"{getattr(sprites, f"EYE_DATA_{f}")['spritesheet'][0]}{f}_{cat.pelt.eye_colour2}_{cat_sprite}"
         )
         eyes2 = sprites.sprites[heterochromia_name].copy()
         eyes2.blit(
-            sprites.sprites[f"heterochromiamask{f}_{cat_sprite}"],
+            sprites.sprites[f"heterochromiamask{f}__{cat_sprite}"],
             (0, 0),
             special_flags=pygame.BLEND_RGBA_MULT,
         )
@@ -235,7 +235,7 @@ def _draw_sprite(
     if not scars_hidden:
         for scar in cat.pelt.scars:
             if scar in cat.pelt.general_scars:
-                sprite_name = f"{sprites.SCAR_DATA['spritesheet'][0]}{f}_{scar}{cat_sprite}"
+                sprite_name = f"{sprites.SCAR_DATA['spritesheet'][0]}{f}_{scar}_{cat_sprite}"
                 new_sprite.blit(
                     sprites.sprites[sprite_name],
                     (0, 0),
@@ -253,7 +253,7 @@ def _draw_sprite(
     )
 
     gradient_surface = (
-        sprites.sprites[f"line_ur_gradient{f}_{cat_sprite}"]
+        sprites.sprites[f"line_ur_gradient{f}__{cat_sprite}"]
         if dead and cat.status.group == CatGroup.UNKNOWN_RESIDENCE
         else None
     )
@@ -294,23 +294,23 @@ def _draw_sprite(
     # draw line art
     if game_setting_get("shaders") and not dead:
         new_sprite.blit(
-            sprites.sprites[f"shader_mask{f}_{cat_sprite}"],
+            sprites.sprites[f"shader_mask{f}__{cat_sprite}"],
             (0, 0),
             special_flags=pygame.BLEND_RGB_MULT,
         )
-        new_sprite.blit(sprites.sprites[f"shader_lighting{f}_{cat_sprite}"], (0, 0))
+        new_sprite.blit(sprites.sprites[f"shader_lighting{f}__{cat_sprite}"], (0, 0))
 
     if not dead:
-        new_sprite.blit(sprites.sprites[f"lineart{f}_{cat_sprite}"], (0, 0))
+        new_sprite.blit(sprites.sprites[f"lineart{f}__{cat_sprite}"], (0, 0))
     elif cat.status.group == CatGroup.UNKNOWN_RESIDENCE:
-        new_sprite.blit(sprites.sprites[f"lineart_ur{f}_{cat_sprite}"], (0, 0))
+        new_sprite.blit(sprites.sprites[f"lineart_ur{f}__{cat_sprite}"], (0, 0))
     elif cat.status.group == CatGroup.DARK_FOREST:
-        new_sprite.blit(sprites.sprites[f"lineart_df{f}_{cat_sprite}"], (0, 0))
+        new_sprite.blit(sprites.sprites[f"lineart_df{f}__{cat_sprite}"], (0, 0))
     elif dead:
-        new_sprite.blit(sprites.sprites[f"lineart_sc{f}_{cat_sprite}"], (0, 0))
+        new_sprite.blit(sprites.sprites[f"lineart_sc{f}__{cat_sprite}"], (0, 0))
     # draw skin and scar masks
     blendmode = pygame.BLEND_RGBA_MIN
-    sprite_name = f"{getattr(sprites, f"SKIN_DATA_{f}")['spritesheet']}{f}_{cat.pelt.skin}{cat_sprite}"
+    sprite_name = f"{getattr(sprites, f"SKIN_DATA_{f}")['spritesheet']}{f}_{cat.pelt.skin}_{cat_sprite}"
     new_sprite.blit(
         sprites.sprites[sprite_name],
         (0, 0),
@@ -318,7 +318,7 @@ def _draw_sprite(
 
     if not scars_hidden:
         for scar in cat.pelt.scars:
-            sprite_name = f"{sprites.SCAR_DATA['spritesheet'][1]}{f}_{scar}{cat_sprite}"
+            sprite_name = f"{sprites.SCAR_DATA['spritesheet'][1]}{f}_{scar}_{cat_sprite}"
             new_sprite.blit(
                 _recolor_lineart(
                     sprites.sprites[sprite_name],
@@ -345,7 +345,7 @@ def _draw_sprite(
             for accessory in cat_accessories:
                 if accessory in getattr(Pelt, category):
                     if accessory in cat.pelt.plant_accessories:
-                        sprite_name = f"{sprites.PLANT_DATA['spritesheet']}{f}_{accessory}{f}_{cat_sprite}"
+                        sprite_name = f"{sprites.PLANT_DATA['spritesheet']}{f}_{accessory}_{cat_sprite}"
                         new_sprite.blit(
                             _recolor_lineart(
                                 sprites.sprites[sprite_name],
@@ -356,7 +356,7 @@ def _draw_sprite(
                         )
                     elif accessory in cat.pelt.wild_accessories:
                         sprite_name = (
-                            f"{sprites.WILD_DATA['spritesheet']}{f}_{accessory}{cat_sprite}"
+                            f"{sprites.WILD_DATA['spritesheet']}{f}_{accessory}_{cat_sprite}"
                         )
                         new_sprite.blit(
                             _recolor_lineart(
@@ -367,7 +367,7 @@ def _draw_sprite(
                             (0, 0),
                         )
                     elif accessory in cat.pelt.collar_accessories:
-                        sprite_name = f"{sprites.COLLAR_DATA['spritesheet']}{f}_{accessory}{cat_sprite}"
+                        sprite_name = f"{sprites.COLLAR_DATA['spritesheet']}{f}_{accessory}_{cat_sprite}"
                         new_sprite.blit(
                             _recolor_lineart(
                                 sprites.sprites[sprite_name],
@@ -393,21 +393,21 @@ def _draw_sprite(
             stage = "2"
 
         new_sprite.blit(
-            sprites.sprites[f"fademask{f}_{stage}{cat_sprite}"],
+            sprites.sprites[f"fademask{f}_{stage}_{cat_sprite}"],
             (0, 0),
             special_flags=pygame.BLEND_RGBA_MULT,
         )
 
         if cat.status.group == CatGroup.STARCLAN:
-            temp = sprites.sprites[f"fadestarclan{f}_{stage}{cat_sprite}"].copy()
+            temp = sprites.sprites[f"fadestarclan{f}_{stage}_{cat_sprite}"].copy()
             temp.blit(new_sprite, (0, 0))
             new_sprite = temp
         elif cat.status.group == CatGroup.UNKNOWN_RESIDENCE:
-            temp = sprites.sprites[f"fadeur{f}_{stage}{cat_sprite}"].copy()
+            temp = sprites.sprites[f"fadeur{f}_{stage}_{cat_sprite}"].copy()
             temp.blit(new_sprite, (0, 0))
             new_sprite = temp
         else:
-            temp = sprites.sprites[f"fadedf{f}_{stage}{cat_sprite}"].copy()
+            temp = sprites.sprites[f"fadedf{f}_{stage}_{cat_sprite}"].copy()
             temp.blit(new_sprite, (0, 0))
             new_sprite = temp
 
@@ -425,13 +425,13 @@ def _draw_sprite(
 
             # overlay
             temp_sprite.blit(
-                sprites.sprites[f"line_sc_overlay{f}_{cat_sprite}"],
+                sprites.sprites[f"line_sc_overlay{f}__{cat_sprite}"],
                 (0, 0),
             )
         elif cat.status.group == CatGroup.UNKNOWN_RESIDENCE:
             # underlay
             temp_sprite.blit(
-                sprites.sprites[f"line_ur_underlay{f}_{cat_sprite}"],
+                sprites.sprites[f"line_ur_underlay{f}__{cat_sprite}"],
                 (0, 0),
             )
 
@@ -440,7 +440,7 @@ def _draw_sprite(
 
             # overlay
             temp_sprite.blit(
-                sprites.sprites[f"line_ur_overlay{f}_{cat_sprite}"],
+                sprites.sprites[f"line_ur_overlay{f}__{cat_sprite}"],
                 (0, 0),
             )
         elif cat.status.group == CatGroup.DARK_FOREST:
@@ -547,7 +547,7 @@ def _build_single_layer(
     recolour = _find_cat_pelt_value(layer_info.get("color"), cat)
     spritesheet = layer_info.get("spritesheet", "pelt_parts_masks")
 
-    temp = sprites.sprites[f"{spritesheet}{f}_{groupName}{sprite}"]
+    temp = sprites.sprites[f"{spritesheet}{f}_{groupName}_{sprite}"]
 
     palette_dict = getattr(sprites, f"PELT_COLOR_PALETTES_{f}")[colour]
     if recolour:
